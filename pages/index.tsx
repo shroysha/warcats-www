@@ -8,7 +8,9 @@ const Home: NextPage = () => {
     <Image
       id="backgroundImage"
       src="/images/background.svg"
-      layout="fill"
+      width="100vw"
+      height="171vw"
+      layout="responsive"
     />
   )
 }
