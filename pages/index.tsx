@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       </Head>,
       <image id="backgrond" href="images/background.svg" width="2304" height="3955"></image>
       <image id="discord" href="images/discord.svg" x="400" y="3126" width="1512" height="152" onClick={() => {
-        window.open("https://discord.gg/DZjRR5TS")
+        window.open("https://discord.gg/C44BjnnAmp")
       }}></image>
       <image id="telegram" href="images/telegram.svg" x="400" y="3340" width="1512" height="152" onClick={() => {
         window.open("https://twitter.com/war_cat_army")
