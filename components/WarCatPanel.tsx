@@ -3,7 +3,7 @@ import { IMAGE_BACKGROUND_HREF } from "../src/constants"
 
 
 interface WarCatPanelProps {
-  children: JSX.Element[] | JSX.Element;
+  children: any;
   width: number,
   height: number,
 }

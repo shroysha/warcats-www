@@ -1,8 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps): any {
-  // @ts-ignore
+function MyApp({ Component, pageProps }: any) {
   return <Component {...pageProps} />
 }
 
