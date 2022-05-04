@@ -1,22 +1,28 @@
+import { Camera, HemisphericLight, MeshBuilder, Scene, Vector3 } from 'babylonjs'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import BuyButton from '../components/BuyButton'
+import SocialButton from '../components/SocialButton'
+import WarCatClickGameComponent from '../components/WarCatClickGameComponent'
+import WarCatPanel from '../components/WarCatPanel'
+import { DISCORD_HREF, IMAGE_DISCORD_HREF, IMAGE_TWITTER_HREF, PAGE_HEIGHT, PAGE_WIDTH, TWITTER_HREF } from '../src/constants'
 
-const Home: NextPage = () => {
-  return (
-    
-    <svg id="panel" width="100vw" height="171vw" viewBox="0 0 2304 3955">
-      <Head>
+const Home = () => {
+  return [
+     <Head>
         <title>War Cats</title>
       </Head>,
-      <image id="backgrond" href="images/background.svg" width="2304" height="3955"></image>
-      <image id="discord" href="images/discord.svg" x="400" y="3126" width="1512" height="152" onClick={() => {
-        window.open("https://discord.gg/C44BjnnAmp")
-      }}></image>
-      <image id="telegram" href="images/telegram.svg" x="400" y="3340" width="1512" height="152" onClick={() => {
-        window.open("https://twitter.com/war_cat_army")
-      }}></image>
-    </svg>
-  )
+      <WarCatPanel width={PAGE_WIDTH} height={PAGE_HEIGHT}>
+          <SocialButton x='468' y='3043' href={TWITTER_HREF} imageHref={IMAGE_TWITTER_HREF}/>
+          <SocialButton x='455' y='3178' href={DISCORD_HREF} imageHref={IMAGE_DISCORD_HREF}/>
+          <BuyButton x="400" y="3410"/>
+
+          {/* <WarCatClickGameComponent/> */}
+      </WarCatPanel>
+
+  ]
+    
+
 }
 
 export default Home
