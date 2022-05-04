@@ -20,8 +20,10 @@ interface SocialButtonProps {
   imageHref: string,
 }
 
-export default (props: SocialButtonProps) => {
+const SocialButton = (props: SocialButtonProps) => {
   return <SocialButtonStyled x={props.x} y={props.y} href={props.imageHref} onClick={() => {
     window.open(props.href)
   }}/>
 }
+
+export default SocialButton

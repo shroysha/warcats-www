@@ -18,8 +18,10 @@ export interface BuyButtonProps {
   y: number | string;
 }
 
-export default (props: BuyButtonProps) => {
+const BuyButton = (props: BuyButtonProps) => {
   return <BuyButtonStyled x={props.x} y={props.y} href="images/mint.svg" onClick={() => {
     window.open("https://app.stargaze.zone/launchpad/stars1z4gdx0vgsks4cz62tvergz5mpafp0jsn6cufsa7amymh9dengppsrkl9yn")
   }}/>
 }
+
+export default BuyButton

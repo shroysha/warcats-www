@@ -8,7 +8,7 @@ interface WarCatPanelProps {
   height: number,
 }
 
-export default (props: WarCatPanelProps) => {
+const WarCatPanel =  (props: WarCatPanelProps) => {
   const PAGE_ASPECT_RATIO = props.height / props.width
   const PAGE_WIDTH_VW = '100vw'
   const PAGE_HEIGHT_VW = `${PAGE_ASPECT_RATIO * 100}vw`
@@ -17,3 +17,5 @@ export default (props: WarCatPanelProps) => {
     {props.children}
   </svg>
 }
+
+export default WarCatPanel
