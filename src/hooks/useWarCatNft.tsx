@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { CosmWasmClient } from 'cosmwasm';
+import { CosmWasmClient, makeSignDoc, SigningCosmWasmClient } from 'cosmwasm';
 import React, { useEffect, useState } from 'react';
 import { getWarCatTokenIds } from 'warcats-common';
+import { ethers } from 'ethers';
+import { makeADR36AminoSignDoc } from '@keplr-wallet/cosmos';
 
 type Nft = {};
 
@@ -34,11 +36,20 @@ export class WalletInfo {
 
   static createInstance(
     wallet: string,
+    account: any,
+    signer: string,
     signed: string,
     signature: string,
     nfts: IWarcatMetadata[]
   ) {
-    WalletInfo.instance = new WalletInfo(wallet, signed, signature, nfts);
+    WalletInfo.instance = new WalletInfo(
+      wallet,
+      account,
+      signer,
+      signed,
+      signature,
+      nfts
+    );
   }
 
   static getInstance() {
@@ -47,6 +58,8 @@ export class WalletInfo {
 
   constructor(
     readonly wallet: string,
+    readonly account: any,
+    readonly signer: string,
     readonly signed: string,
     readonly signature: string,
     readonly nfts: IWarcatMetadata[]
@@ -58,19 +71,67 @@ export const connectWallet = async () => {
 
   const offlineSigner = (window as any).getOfflineSigner('stargaze-1');
   const accounts = await offlineSigner.getAccounts();
+  const signed = 'Login';
 
-  const { signed, signature } = await (window as any).keplr.signArbitrary(
+  const signDoc = makeADR36AminoSignDoc(accounts[0].address, 'Login');
+  // const signDoc = makeSignDoc(
+  //   [
+  //     {
+  //       type: 'warcats-login',
+  //       value: 'Login'
+  //     }
+  //   ],
+  //   {
+  //     amount: [],
+  //     // Note: this needs to be 0 gas to comply with ADR36, but Keplr current throws an error. See: https://github.com/cosmos/cosmos-sdk/blob/master/docs/architecture/adr-036-arbitrary-signature.md#decision
+  //     gas: '0'
+  //   },
+  //   'stargaze-1',
+  //   '',
+  //   0,
+  //   0
+  // );
+  // const signDoc = makeADR36AminoSignDoc();
+
+  // const response = await (window as any).keplr.signArbitrary(
+  //   'stargaze-1',
+  //   accounts[0].address,
+  //   signed
+  // );
+
+  const response = await (window as any).keplr.signAmino(
     'stargaze-1',
     accounts[0].address,
-    'Login'
+    signDoc
   );
+  //const message = ethers.utils.hexlify('4c6f67696e');
+  // const message = `{"data": "${ethers.utils.formatBytes32String('Login')}"}`;
+
+  // const response = await (window as any).keplr.signEthereum(
+  //   'stargaze-1',
+  //   accounts[0].address,
+  //   message,
+  //   'transaction'
+  // );
+
+  // console.log('wallet sign response', response, accounts[0]);
 
   WalletInfo.createInstance(
     accounts[0].address,
-    signed,
-    signature,
+    accounts[0],
+    response.signature.pub_key,
+    response.signed,
+    response.signature.signature,
     await getWarCatNfts(accounts[0].address)
   );
+  // WalletInfo.createInstance(
+  //   accounts[0].address,
+  //   accounts[0],
+  //   response,
+  //   message,
+  //   response,
+  //   await getWarCatNfts(accounts[0].address)
+  // );
 };
 
 export const WarCatNftContext = React.createContext<{

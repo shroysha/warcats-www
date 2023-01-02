@@ -41,9 +41,11 @@ export class GameSocket {
         console.error(e);
       }
     });
+
     this.socket.emit('find_game', {
       warcatTokenId,
       wallet: WalletInfo.getInstance()!.wallet,
+      account: WalletInfo.getInstance()!.account,
       signed: WalletInfo.getInstance()!.signed,
       signature: WalletInfo.getInstance()!.signature
     });
@@ -150,6 +152,7 @@ export class GameSocket {
     this.socket.emit('declare_victory', {
       gameId: this.gameData!._id,
       wallet: WalletInfo.getInstance()!.wallet,
+      account: WalletInfo.getInstance()!.account,
       signed: WalletInfo.getInstance()!.signed,
       signature: WalletInfo.getInstance()!.signature
     });
@@ -163,6 +166,7 @@ export class GameSocket {
       position,
       oldPosition,
       wallet: WalletInfo.getInstance()!.wallet,
+      account: WalletInfo.getInstance()!.account,
       signed: WalletInfo.getInstance()!.signed,
       signature: WalletInfo.getInstance()!.signature
     });
@@ -174,6 +178,7 @@ export class GameSocket {
       unitId,
       position,
       wallet: WalletInfo.getInstance()!.wallet,
+      account: WalletInfo.getInstance()!.account,
       signed: WalletInfo.getInstance()!.signed,
       signature: WalletInfo.getInstance()!.signature
     });
@@ -183,6 +188,7 @@ export class GameSocket {
     this.socket.emit('end_turn', {
       gameId: this.gameData!._id,
       wallet: WalletInfo.getInstance()!.wallet,
+      account: WalletInfo.getInstance()!.account,
       signed: WalletInfo.getInstance()!.signed,
       signature: WalletInfo.getInstance()!.signature
     });
@@ -195,6 +201,7 @@ export class GameSocket {
       position: mapPosition,
       unitPath: unitPath.toString(),
       wallet: WalletInfo.getInstance()!.wallet,
+      account: WalletInfo.getInstance()!.account,
       signed: WalletInfo.getInstance()!.signed,
       signature: WalletInfo.getInstance()!.signature
     });
