@@ -36,6 +36,8 @@ import { PlayerNameTag } from './sprites/PlayerNameTag';
 import { BuildingPurchasePopup } from './sprites/BuildingPurchasePopup';
 import { getWarCatMetadata, WalletInfo } from '@/hooks';
 import { GameOverPanel } from './sprites/GameOverPanel';
+import { OptionsPanel } from './ui/OptionsPanel';
+import { DeclareVictoryPanel } from './ui/DeclareVictoryPanel';
 
 export class WarCatGame {
   static createInstance(scene: Scene, warcatTokenId: number) {
@@ -58,6 +60,9 @@ export class WarCatGame {
   pendingPurchaseInfo: { unitPath: UnitPath; building: Building } | null = null;
   gameOverPanel: GameOverPanel | null = null;
   endTurnButton: Button | null = null;
+  optionsButton: Button | null = null;
+  optionsPanel: OptionsPanel | null = null;
+  declareVictoryPanel: DeclareVictoryPanel | null = null;
   managerMap: SpriteManager | null = null;
 
   constructor(readonly scene: Scene, readonly warcatTokenId: number) {
@@ -172,6 +177,24 @@ export class WarCatGame {
     this.endTurnButton.textBlock!.fontFamily = 'ThaleahFat';
     this.uiTexture.addControl(this.endTurnButton);
 
+    this.optionsButton = Button.CreateSimpleButton('Options', 'Options');
+    this.optionsButton.widthInPixels = 100;
+    this.optionsButton.heightInPixels = 80;
+    this.optionsButton.leftInPixels = -400;
+    this.optionsButton.topInPixels = 400;
+    this.optionsButton.onPointerClickObservable.add(() => {
+      if (this.optionsPanel == null) {
+        this.optionsPanel = new OptionsPanel(this);
+      } else {
+        this.optionsPanel.dispose();
+        this.optionsPanel = null;
+      }
+    });
+    this.optionsButton.isPointerBlocker = true;
+    this.optionsButton.background = 'white';
+    this.optionsButton.textBlock!.fontFamily = 'ThaleahFat';
+    this.uiTexture.addControl(this.optionsButton);
+
     for (const unit of game.units) {
       try {
         const sprite = this.spriteFactory.createUnit(unit, this.uiTexture);
@@ -192,6 +215,24 @@ export class WarCatGame {
     console.log('set game to', game);
     this.game = game;
     this.changeEndTurnButton();
+  }
+
+  showDeclareVictory() {
+    this.optionsPanel!.dispose();
+    this.optionsPanel = null;
+
+    this.declareVictoryPanel = new DeclareVictoryPanel(this);
+  }
+
+  hideDeclareVictoryPanel() {
+    this.declareVictoryPanel!.dispose();
+    this.declareVictoryPanel = null;
+  }
+
+  declareVictory() {
+    this.declareVictoryPanel!.dispose();
+    this.declareVictoryPanel = null;
+    this.gameSocket.declareVictory();
   }
 
   destroyPopup() {
@@ -242,6 +283,7 @@ export class WarCatGame {
   setTurn(turn: string, undoGrey = true) {
     if (this.game != null) {
       this.game!.turn = turn;
+      this.game.lastMoveTime = new Date().getTime();
       this.changeEndTurnButton();
     }
     if (turn == Team.Purple) {

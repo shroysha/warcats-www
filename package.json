@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "warcats-common": "^1.0.0",
+    "warcats-common": "^1.0.5",
     "autoprefixer": "^10.4.8",
     "axios": "^1.2.1",
     "babel-preset-next": "^1.4.0",

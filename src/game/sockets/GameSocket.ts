@@ -74,6 +74,14 @@ export class GameSocket {
         }
       }
     );
+    this.socket.on('declare_victory', ({ winningWallet }: any) => {
+      console.log('received victory', {
+        winningWallet
+      });
+      if (winningWallet != null) {
+        this.game.onGameOver(winningWallet);
+      }
+    });
     this.socket.on('ended_turn', ({ turn, player1Gold, player2Gold }: any) => {
       this.game.setTurn(turn);
       console.log({ player1Gold, player2Gold });
@@ -136,6 +144,15 @@ export class GameSocket {
         this.game.changeBuildingHealth(attackedId, attackedHealth);
       }
     );
+  }
+
+  declareVictory() {
+    this.socket.emit('declare_victory', {
+      gameId: this.gameData!._id,
+      wallet: WalletInfo.getInstance()!.wallet,
+      signed: WalletInfo.getInstance()!.signed,
+      signature: WalletInfo.getInstance()!.signature
+    });
   }
 
   moveUnit(unitId: string, position: MapPosition, oldPosition: MapPosition) {
