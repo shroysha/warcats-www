@@ -18,6 +18,8 @@ export class BuildingSprite extends GameSprite<Building> {
     this.hpText.height = 0.1;
     this.hpText.fontSize = 32;
     this.hpText.color = 'white';
+    this.hpText.fontFamily = 'ThaleahFat';
+
     uiTexture.addControl(this.hpText);
     this.repositionHpText();
     this.changeHealth(building.health);
