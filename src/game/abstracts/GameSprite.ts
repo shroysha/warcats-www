@@ -52,15 +52,15 @@ export function getWarCatPath(entity: GameEntity<unknown, unknown>) {
   // const color = warCat.attributes.find(
   //   (attr: any) => attr.trait_type == 'cat'
   // ).value;
-  const color = 'White';
-  const item = warCat.attributes.find(
+  const color: string = 'White';
+  const item: string = warCat.attributes.find(
     (attr: any) => attr.trait_type == 'item'
   ).value;
 
   const finalItem = item == 'Samurai' ? 'Bazooka' : item;
-  return `/pngs/cats/idle-${color.toLowerCase().replace(' ', '-')}-${finalItem
+  return `/pngs/cats/idle-${color
     .toLowerCase()
-    .replace(' ', '-')}.png`;
+    .replaceAll(' ', '-')}-${finalItem.toLowerCase().replaceAll(' ', '-')}.png`;
 }
 
 export function getImagePath(entity: GameEntity<unknown, unknown>) {

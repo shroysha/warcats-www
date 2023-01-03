@@ -1,12 +1,15 @@
+import { WalletInfo } from '@/hooks';
 import { Button, ScrollViewer, StackPanel } from 'babylonjs-gui';
-import { Building, getUnitCost, MapPosition, UnitPath } from 'warcats-common';
+import {
+  airUnits,
+  Building,
+  getUnitCost,
+  landUnits,
+  MapPosition,
+  UnitPath
+} from 'warcats-common';
 import { tileToWorldPosition } from '../helpers';
 import { WarCatGame } from '../WarCatGame';
-
-export const unitPurchaseInfos = [
-  { unitPath: UnitPath.RedAA, cost: getUnitCost(UnitPath.RedAA) },
-  { unitPath: UnitPath.RedHeli1, cost: getUnitCost(UnitPath.RedHeli1) }
-];
 
 export class BuildingPurchasePopup extends StackPanel {
   constructor(
@@ -25,7 +28,8 @@ export class BuildingPurchasePopup extends StackPanel {
     myScrollViewer.horizontalBar.dispose();
     const innerStack = new StackPanel('inner stack');
     let top = 0;
-    for (const unitPurchaseInfo of unitPurchaseInfos) {
+    console.log('spawnable', this.getPurchaseInfos(building));
+    for (const unitPurchaseInfo of this.getPurchaseInfos(building)) {
       const button = Button.CreateSimpleButton(
         'buy' + unitPurchaseInfo.unitPath.toString(),
         'Buy ' + unitPurchaseInfo.unitPath.toString()
@@ -55,6 +59,32 @@ export class BuildingPurchasePopup extends StackPanel {
     this.leftInPixels = worldPos.x * 105 + 135;
     this.topInPixels = -worldPos.y * 105 + 40;
   }
+
+  private getPurchaseInfos(building: Building) {
+    return this.getSpawnableUnits(building).map((unitPath) => {
+      return {
+        unitPath,
+        cost: getUnitCost(unitPath)
+      };
+    });
+  }
+
+  private getSpawnableUnits = (building: Building) => {
+    const player = this.warCatGame.game!.getPlayerWithWallet(
+      WalletInfo.getInstance()!.wallet
+    );
+    if (building.path.endsWith('b4')) {
+      return landUnits.filter((unitPath) => {
+        return unitPath.startsWith(player.team) && !unitPath.endsWith('warcat');
+      });
+    } else if (building.path.endsWith('b3')) {
+      return airUnits.filter((unitPath) => {
+        return unitPath.startsWith(player.team) && !unitPath.endsWith('warcat');
+      });
+    } else {
+      return [];
+    }
+  };
 
   private setPendingPurchase(unitPath: UnitPath) {
     console.log('doing top button action');

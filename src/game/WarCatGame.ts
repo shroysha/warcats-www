@@ -67,7 +67,7 @@ export class WarCatGame {
 
   constructor(readonly scene: Scene, readonly warcatTokenId: number) {
     this.init();
-    // this.scene.debugLayer.show();
+    this.scene.debugLayer.show();
 
     this.spriteFactory = new WarCatSpriteFactory(this.scene);
 

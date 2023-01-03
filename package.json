@@ -28,7 +28,7 @@
     "socket.io-client": "^4.5.2",
     "styled-components": "^5.3.5",
     "tailwindcss": "^3.1.8",
-    "warcats-common": "^1.0.5"
+    "warcats-common": "^1.0.6"
   },
   "devDependencies": {
     "@types/node": "17.0.21",

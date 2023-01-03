@@ -32,6 +32,11 @@ export class UnitSprite extends GameSprite<Unit> {
     this.sprite.position = this.sprite.position.addInPlace(
       new Vector3(0, 0, -0.01)
     );
+
+    if (unit.path.endsWith('warcat')) {
+      this.sprite.width = 1;
+      this.sprite.height = 1;
+    }
   }
 
   setIsGreyedOut(isGreyedOut: boolean) {

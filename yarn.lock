@@ -5027,10 +5027,10 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-warcats-common@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/warcats-common/-/warcats-common-1.0.5.tgz#f526cfbccd41b86a97a9b5f29d0a626f8619a663"
-  integrity sha512-hC6QRcLSH2F8VfifVvsan2aBPTGZZkCM8Axe8YdjvarJWavAEKouMGv3dG7Zm9asfXKkTROlVpBdMoQsdnpItQ==
+warcats-common@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/warcats-common/-/warcats-common-1.0.6.tgz#f64afc88c7372090358d47d8bb80cbf9a98d940c"
+  integrity sha512-5OMdTQqQdnXOUSX7Oe7UXRMwAr5P7Seo/zOA0C7fW9kNBbKL4vu8BTyV0Y9EeuKmcrBM6PVokgQLhFI3oSBv/Q==
   dependencies:
     class-transformer "^0.5.1"
     cosmwasm "^1.1.1"
