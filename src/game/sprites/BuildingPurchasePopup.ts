@@ -11,6 +11,53 @@ import {
 import { tileToWorldPosition } from '../helpers';
 import { WarCatGame } from '../WarCatGame';
 
+const getUnitName = (unitPath: UnitPath) => {
+  switch (unitPath) {
+    case UnitPath.PurpleAA:
+      return 'Purple Rocket';
+    case UnitPath.PurpleHeli1:
+      return 'Purple Chinook';
+    case UnitPath.PurpleHeli2:
+      return 'Purple Apache';
+    case UnitPath.PurpleInf1:
+      return 'Purple Infantry';
+    case UnitPath.PurpleInf2:
+      return 'Purple Anti Armor';
+    case UnitPath.PurpleJet1:
+      return 'Purple Jet';
+    case UnitPath.PurpleJet2:
+      return 'Purple Bomber';
+    case UnitPath.PurpleTank1:
+      return 'Purple Tank';
+    case UnitPath.PurpleTank2:
+      return 'Purple Anti Air';
+    case UnitPath.PurpleTank3:
+      return 'Purple Recon';
+    case UnitPath.RedAA:
+      return 'Red Rocket';
+    case UnitPath.RedHeli1:
+      return 'Red Chinook';
+    case UnitPath.RedHeli2:
+      return 'Red Apache';
+    case UnitPath.RedInf1:
+      return 'Red Infantry';
+    case UnitPath.RedInf2:
+      return 'Red Anti Armor';
+    case UnitPath.RedJet1:
+      return 'Red Jet';
+    case UnitPath.RedJet2:
+      return 'Red Bomber';
+    case UnitPath.RedTank1:
+      return 'Red Tank';
+    case UnitPath.RedTank2:
+      return 'Red Anti Air';
+    case UnitPath.RedTank3:
+      return 'Red Recon';
+    default:
+      return 'Unknown';
+  }
+};
+
 export class BuildingPurchasePopup extends StackPanel {
   constructor(
     private readonly warCatGame: WarCatGame,
@@ -32,7 +79,7 @@ export class BuildingPurchasePopup extends StackPanel {
     for (const unitPurchaseInfo of this.getPurchaseInfos(building)) {
       const button = Button.CreateSimpleButton(
         'buy' + unitPurchaseInfo.unitPath.toString(),
-        'Buy ' + unitPurchaseInfo.unitPath.toString()
+        unitPurchaseInfo.name
       );
       button.width = '100px';
       button.height = '40px';
@@ -64,7 +111,8 @@ export class BuildingPurchasePopup extends StackPanel {
     return this.getSpawnableUnits(building).map((unitPath) => {
       return {
         unitPath,
-        cost: getUnitCost(unitPath)
+        cost: getUnitCost(unitPath),
+        name: getUnitName(unitPath)
       };
     });
   }
