@@ -32,12 +32,13 @@ export class WarCatTitleUi {
 
   uiTexture: AdvancedDynamicTexture;
   selectedWarCat: number = 0;
-  music: any;
+  music: HTMLAudioElement;
 
   constructor(private readonly scene: Scene) {
     // scene.debugLayer.show();
     this.music = new Audio('music.mp3');
     this.music.loop = true;
+    this.music.volume = 0.5;
 
     const camera = new UniversalCamera(
       'UniversalCamera',
